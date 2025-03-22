@@ -8,6 +8,7 @@ let main () =
   Printf.printf "P3\n%d %d\n255\n" image_width image_height;
 
   for j = 0 to image_height - 1 do
+    Printf.fprintf stderr "\rScanlines remaining: %d %!" (image_height - j);
     for i = 0 to image_width - 1 do
       let r = float i /. (float image_width -. 1.)
       and g = float j /. (float image_height -. 1.)
@@ -19,6 +20,7 @@ let main () =
 
       Printf.printf "%d %d %d\n" ir ig ib
     done
-  done
+  done;
+  Printf.fprintf stderr "\rDone.                 \n"
 
 let () = main ()
