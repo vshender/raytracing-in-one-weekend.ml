@@ -15,3 +15,9 @@
  (modules test_color testables)
  (libraries alcotest raytracing_in_one_weekend)
  (package raytracing-in-one-weekend))
+
+(test
+ (name test_ray)
+ (modules test_ray testables)
+ (libraries alcotest raytracing_in_one_weekend)
+ (package raytracing-in-one-weekend))
