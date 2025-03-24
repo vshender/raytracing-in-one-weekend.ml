@@ -1,3 +1,5 @@
+open Raytracing_in_one_weekend
+
 let main () =
   (* Image *)
   let image_width = 256
@@ -10,15 +12,12 @@ let main () =
   for j = 0 to image_height - 1 do
     Printf.fprintf stderr "\rScanlines remaining: %d %!" (image_height - j);
     for i = 0 to image_width - 1 do
-      let r = float i /. (float image_width -. 1.)
-      and g = float j /. (float image_height -. 1.)
-      and b = 0.0 in
-
-      let ir = int_of_float (255.999 *. r)
-      and ig = int_of_float (255.999 *. g)
-      and ib = int_of_float (255.999 *. b) in
-
-      Printf.printf "%d %d %d\n" ir ig ib
+      let pixel_color = Color.make
+        (float i /. (float image_width -. 1.))
+        (float j /. (float image_height -. 1.))
+        0.0
+      in
+      Printf.printf "%a\n" Color.output pixel_color
     done
   done;
   Printf.fprintf stderr "\rDone.                 \n"

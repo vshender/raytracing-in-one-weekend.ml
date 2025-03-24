@@ -1,7 +1,10 @@
-.PHONY: render clean
+.PHONY: render test clean
 
 render:
 	dune exec ./bin/raytracer.exe > scene.ppm
+
+test:
+	dune runtest
 
 clean:
 	dune clean
