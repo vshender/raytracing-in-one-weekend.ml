@@ -1,0 +1,17 @@
+(test
+ (name test_vec3)
+ (modules test_vec3 testables)
+ (libraries alcotest raytracing_in_one_weekend)
+ (package raytracing-in-one-weekend))
+
+(test
+ (name test_point)
+ (modules test_point testables)
+ (libraries alcotest raytracing_in_one_weekend)
+ (package raytracing-in-one-weekend))
+
+(test
+ (name test_color)
+ (modules test_color testables)
+ (libraries alcotest raytracing_in_one_weekend)
+ (package raytracing-in-one-weekend))

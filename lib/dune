@@ -1,0 +1,3 @@
+(library
+ (name raytracing_in_one_weekend)
+ (public_name raytracing-in-one-weekend))

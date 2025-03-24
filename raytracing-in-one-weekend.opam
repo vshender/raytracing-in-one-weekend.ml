@@ -1,0 +1,29 @@
+opam-version: "2.0"
+name: "raytracing-in-one-weekend"
+version: "~dev"
+synopsis: "Ray Tracing in One Weekend implemented in OCaml"
+description: "A Ray Tracer based on Peter Shirley's 'Ray Tracing in One Weekend' book"
+maintainer: ["Vadzim Shender <vadzim@shender.org>"]
+authors: ["Vadzim Shender <vadzim@shender.org>"]
+license: "ISC"
+homepage: "https://github.com/vshender/raytracing-in-one-weekend.ml"
+bug-reports: "https://github.com/vshender/raytracing-in-one-weekend.ml/issues"
+depends: [
+  "dune" {>= "3.4"}
+  "ocaml" {>= "4.13.0"}
+  "alcotest" {with-test}
+]
+build: [
+  ["dune" "subst"] {dev}
+  [
+    "dune"
+    "build"
+    "-p"
+    name
+    "-j"
+    jobs
+    "@install"
+    "@runtest" {with-test}
+    "@doc" {with-doc}
+  ]
+]
