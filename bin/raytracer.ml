@@ -1,12 +1,25 @@
 open Raytracing_in_one_weekend
 
+(** [hit_sphere center radius ray] is [true] if the ray hits the sphere. *)
+let hit_sphere center radius ray =
+  let open Ray in
+  let oc = Point.Infix.(center - ray.origin) in
+  let a = Vec3.dot ray.direction ray.direction
+  and b = -2. *. Vec3.dot ray.direction oc
+  and c = Vec3.dot oc oc -. radius *. radius in
+  let discriminant = b *. b -. 4. *. a *. c in
+  discriminant >= 0.
+
 (** [ray_color ray] computes the scene pixel color for the given ray. *)
-let ray_color { Ray.direction; _ } =
-  let start_value = Color.make 1. 1. 1.
-  and end_value = Color.make 0.5 0.7 1. in
-  let unit_direction = Vec3.normalize direction in
-  let a = 0.5 *. (unit_direction.y +. 1.) in
-  Color.Infix.(start_value * (1. -. a) + end_value * a)
+let ray_color ray =
+  if hit_sphere (Point.make 0. 0. (-1.)) 0.5 ray then
+     Color.make 1. 0. 0.
+  else
+    let start_value = Color.make 1. 1. 1.
+    and end_value = Color.make 0.5 0.7 1. in
+    let unit_direction = Vec3.normalize ray.direction in
+    let a = 0.5 *. (unit_direction.y +. 1.) in
+    Color.Infix.(start_value * (1. -. a) + end_value * a)
 
 let main () =
   (* Image *)
