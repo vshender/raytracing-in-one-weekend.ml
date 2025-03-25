@@ -6,14 +6,14 @@ open Raytracing_in_one_weekend
 let hit_sphere center radius ray =
   let open Ray in
   let oc = Point.Infix.(center - ray.origin) in
-  let a = Vec3.dot ray.direction ray.direction
-  and b = -2. *. Vec3.dot ray.direction oc
-  and c = Vec3.dot oc oc -. radius *. radius in
-  let discriminant = b *. b -. 4. *. a *. c in
+  let a = Vec3.length_squared ray.direction
+  and h = Vec3.dot ray.direction oc
+  and c = Vec3.length_squared oc -. radius *. radius in
+  let discriminant = h *. h -. a *. c in
   if discriminant < 0. then
     None
   else
-    Some ((-.b -. sqrt discriminant) /. (2. *. a))
+    Some ((h -. sqrt discriminant) /. a)
 
 (** [ray_color ray] computes the scene pixel color for the given ray. *)
 let ray_color ray =
