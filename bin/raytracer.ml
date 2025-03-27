@@ -1,32 +1,15 @@
 open Raytracing_in_one_weekend
 
-(** [hit_sphere center radius ray] calculates the intersection point of the
-    ray with the sphere.  It returns the distance to the intersection point
-    if there is one, or [None] if there is no intersection. *)
-let hit_sphere center radius ray =
-  let open Ray in
-  let oc = Point.Infix.(center - ray.origin) in
-  let a = Vec3.length_squared ray.direction
-  and h = Vec3.dot ray.direction oc
-  and c = Vec3.length_squared oc -. radius *. radius in
-  let discriminant = h *. h -. a *. c in
-  if discriminant < 0. then
-    None
-  else
-    Some ((h -. sqrt discriminant) /. a)
-
-(** [ray_color ray] computes the scene pixel color for the given ray. *)
-let ray_color ray =
-  let center = Point.make 0. 0. (-1.) and radius = 0.5 in
-  match hit_sphere center radius ray with
-  | Some t ->
-    let open Vec3 in
-    let n = Vec3.normalize Point.Infix.(Ray.at ray t - center) in
-    Color.Infix.(Color.make (n.x +. 1.) (n.y +. 1.) (n.z +. 1.) * 0.5)
+(** [ray_color ray world] computes the scene pixel color for the given ray. *)
+let ray_color ray world =
+  match world#hit ray ~t_min:0. ~t_max:Float.infinity with
+  | Some hr ->
+    let { HitRecord.normal; _ } = hr in
+    Color.Infix.((Color.of_vec3 normal + Color.make 1. 1. 1.) * 0.5)
   | None ->
     let start_value = Color.make 1. 1. 1.
     and end_value = Color.make 0.5 0.7 1. in
-    let unit_direction = Vec3.normalize ray.direction in
+    let unit_direction = Vec3.normalize ray.Ray.direction in
     let a = 0.5 *. (unit_direction.y +. 1.) in
     Color.Infix.(start_value * (1. -. a) + end_value * a)
 
@@ -39,6 +22,16 @@ let main () =
   (* Calculate the image height, and ensure that it's at least 1. *)
   let image_height = int_of_float (float image_width /. aspect_ratio) in
   let image_height = if image_height < 1 then 1 else image_height in
+
+  (* World *)
+  let world = List.fold_left
+    (fun hl -> hl#add)
+    (new HittableList.t)
+    [
+      new Sphere.t ~center:(Point.make 0. 0. (-1.)) ~radius:0.5;
+      new Sphere.t ~center:(Point.make 0. (-100.5) (-1.)) ~radius:100.
+    ]
+  in
 
   (* Camera *)
 
@@ -89,7 +82,7 @@ let main () =
       let ray_direction = Point.Infix.(pixel_center - camera_center) in
       let ray = Ray.make ~origin:camera_center ~direction:ray_direction in
 
-      let pixel_color = ray_color ray in
+      let pixel_color = ray_color ray world in
       Printf.printf "%a\n" Color.output pixel_color
     done
   done;

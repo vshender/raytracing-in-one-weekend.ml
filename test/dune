@@ -21,3 +21,15 @@
  (modules test_ray testables)
  (libraries alcotest raytracing_in_one_weekend)
  (package raytracing-in-one-weekend))
+
+(test
+ (name test_sphere)
+ (modules test_sphere testables)
+ (libraries alcotest raytracing_in_one_weekend)
+ (package raytracing-in-one-weekend))
+
+(test
+ (name test_hittable_list)
+ (modules test_hittable_list testables)
+ (libraries alcotest raytracing_in_one_weekend)
+ (package raytracing-in-one-weekend))
