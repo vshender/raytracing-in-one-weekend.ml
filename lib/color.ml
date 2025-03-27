@@ -7,6 +7,9 @@ type t = {
 let make r g b =
   { r; g; b }
 
+let of_vec3 { Vec3.x; y; z } =
+  { r = x; g = y; b = z }
+
 let output oc { r; g; b } =
   let scale = 255.999 in
   Printf.fprintf oc "%d %d %d"

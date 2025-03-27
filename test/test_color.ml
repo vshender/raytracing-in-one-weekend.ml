@@ -1,4 +1,5 @@
-open Raytracing_in_one_weekend.Color
+open Raytracing_in_one_weekend
+open Color
 
 open Testables
 
@@ -38,6 +39,12 @@ let test_scale () =
   Alcotest.check color "scale multiplies color by scalar"
     { r = 0.2; g = 0.4; b = 0.6 } (scale c ~by:2.)
 
+let test_of_vec3 () =
+  let v = Vec3.make 0.1 0.2 0.3 in
+  let c = of_vec3 v in
+  Alcotest.check color "of_vec3 converts Vec3 to Color correctly"
+    { r = 0.1; g = 0.2; b = 0.3 } c
+
 (* }}} *)
 
 (* {{{ Test cases for infix operators.
@@ -73,6 +80,7 @@ let () =
       test_case "output" `Quick test_output;
       test_case "add" `Quick test_add;
       test_case "scale" `Quick test_scale;
+      test_case "of_vec3" `Quick test_of_vec3;
     ];
     "infix", [
       test_case "+" `Quick test_infix_add;

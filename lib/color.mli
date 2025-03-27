@@ -8,6 +8,9 @@ type t = {
 (** [create r g b] creates a new color from RGB components. *)
 val make : float -> float -> float -> t
 
+(** [of_vec3 v] creates a new color using the components of the vector [v]. *)
+val of_vec3 : Vec3.t -> t
+
 (** [output oc c] writes the color [c] to the output channel [oc]. *)
 val output : out_channel -> t -> unit
 
