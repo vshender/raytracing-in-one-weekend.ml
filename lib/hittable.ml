@@ -1,3 +1,3 @@
 class type t = object
-  method hit : Ray.t -> t_min:float -> t_max:float -> HitRecord.t option
+  method hit : Ray.t -> Interval.t -> HitRecord.t option
 end

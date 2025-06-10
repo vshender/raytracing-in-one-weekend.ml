@@ -35,6 +35,12 @@
  (package raytracing-in-one-weekend))
 
 (test
+ (name test_interval)
+ (modules test_interval testables)
+ (libraries alcotest raytracing_in_one_weekend)
+ (package raytracing-in-one-weekend))
+
+(test
  (name test_util)
  (modules test_util testables)
  (libraries alcotest raytracing_in_one_weekend)

@@ -6,13 +6,13 @@ class ['a] t = object (_ : 'b)
   method add : 'a -> 'b =
     fun o -> {< objects = o :: objects >}
 
-  method hit ray ~t_min ~t_max =
+  method hit ray interval =
     objects
     |> List.fold_left
       (fun (closest, closest_dist) o ->
-        match o#hit ray ~t_min ~t_max:closest_dist with
+        match o#hit ray { interval with Interval.max = closest_dist } with
         | None -> (closest, closest_dist)
         | Some hr -> (Some hr, hr.HitRecord.t))
-      (None, t_max)
+      (None, interval.Interval.max)
     |> fst
 end

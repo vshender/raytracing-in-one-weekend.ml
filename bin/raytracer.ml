@@ -2,7 +2,7 @@ open Raytracing_in_one_weekend
 
 (** [ray_color ray world] computes the scene pixel color for the given ray. *)
 let ray_color ray world =
-  match world#hit ray ~t_min:0. ~t_max:Float.infinity with
+  match world#hit ray (Interval.make 0. Float.infinity) with
   | Some hr ->
     let { HitRecord.normal; _ } = hr in
     Color.Infix.((Color.of_vec3 normal + Color.make 1. 1. 1.) * 0.5)

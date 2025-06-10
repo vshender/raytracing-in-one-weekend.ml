@@ -2,7 +2,7 @@ class t ~center ~radius = object
   val center = center
   val radius = radius
 
-  method hit ray ~t_min ~t_max =
+  method hit ray interval =
     let open Ray in
 
     let oc = Point.Infix.(center - ray.origin) in
@@ -19,11 +19,11 @@ class t ~center ~radius = object
       (* Find the nearest root that lies in the acceptable range. *)
       let root =
         let root = (h -. sqrtd) /. a in
-        if t_min <= root && root <= t_max then
+        if Interval.contains interval root then
           Some root
         else
           let root = (h +. sqrtd) /. a in
-          if t_min <= root && root <= t_max then
+          if Interval.contains interval root then
             Some root
           else
             None
