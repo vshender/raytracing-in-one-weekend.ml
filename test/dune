@@ -33,3 +33,9 @@
  (modules test_hittable_list testables)
  (libraries alcotest raytracing_in_one_weekend)
  (package raytracing-in-one-weekend))
+
+(test
+ (name test_util)
+ (modules test_util testables)
+ (libraries alcotest raytracing_in_one_weekend)
+ (package raytracing-in-one-weekend))

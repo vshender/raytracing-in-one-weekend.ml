@@ -93,7 +93,7 @@ let test_tangent_ray () =
       (* The normal could be either direction depending on numerical precision. *)
       let normal_length_squared = Vec3.length_squared hr.normal in
       Alcotest.(check bool) "Normal is unit length"
-        true (float_equal normal_length_squared 1.);
+        true (Util.float_equal normal_length_squared 1.);
 
       (* Check that the normal has a significant y-component (vertical). *)
       let abs_y = abs_float hr.normal.y in

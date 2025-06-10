@@ -1,12 +1,5 @@
 open Raytracing_in_one_weekend
-
-(** [eps] is the epsilon value for floating point comparisons. *)
-let eps = 1e-8
-
-(** [float_equal ?epsilon f1 f2] checks if two floats are equal with a given
-    precision. *)
-let float_equal ?(epsilon = eps) f1 f2 =
-  abs_float (f1 -. f2) < epsilon
+open Raytracing_in_one_weekend.Util
 
 (** [point_equal] compares two points with a small epsilon tolerance. *)
 let point_equal ?(epsilon = 1e-6) (p1 : Point.t) (p2 : Point.t) =
